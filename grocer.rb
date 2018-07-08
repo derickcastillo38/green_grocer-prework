@@ -1,32 +1,20 @@
 require 'pry'
 def consolidate_cart(cart)
-  consolidated_cart = {}
-  cart.each do |item|
-    item.each do |key, value|
-      count = cart.count(item)
-      consolidated_cart[key] = {}
-      value.each do |extra, extra_value|
-        consolidated_cart[key][extra] = extra_value
-      end
-      consolidated_cart[key][:count] = count
+  cart_hash = {}
+  uniques = cart.uniq
+
+  cart_keys = cart.map do |hash|
+    hash.map { |k, v| k }
+  end.flatten
+
+  uniques.each do |hash|
+    hash.each do |item, item_hash|
+      cart_hash[item] = item_hash
+      cart_hash[item][:count] = cart_keys.count(item)
     end
   end
-  consolidated_cart
-  # cart_hash = {}
-  # uniques = cart.uniq
-  #
-  # cart_keys = cart.map do |hash|
-  #   hash.map { |k, v| k }
-  # end.flatten
-  #
-  # uniques.each do |hash|
-  #   hash.each do |item, item_hash|
-  #     cart_hash[item] = item_hash
-  #     cart_hash[item][:count] = cart_keys.count(item)
-  #   end
-  # end
-  #
-  # cart_hash
+
+  cart_hash
 end
 
 def apply_coupons(cart, coupons)

@@ -54,12 +54,13 @@ def apply_clearance(cart)
 end
 
 def checkout(cart, coupons)
-    consolidated_cart = consolidate_cart(cart)
-  couponed_cart = apply_coupons(consolidated_cart, coupons)
-  final_cart = apply_clearance(couponed_cart)
+  cart1 = consolidate_cart(cart)
+  cart2 = apply_coupons(cart2, coupons)
+  cart3 = apply_clearance(cart2)
+  
   total = 0
-  final_cart.each do |name, properties|
-    total += properties[:price] * properties[:count]
+  cart3.each do |item, item_hash|
+    total += item_hash[:price] * item_hash[:count]
   end
   total = total * 0.9 if total > 100
   total
